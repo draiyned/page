@@ -32,13 +32,21 @@ body {font-family:'Montserrat', sans-serif; background: linear-gradient(135deg,#
 .tab-content.active {display:block;}
 
 /* Love Letter */
+.letter-content p{
+    margin: 0 0 20px 0;   /* creates the blank line */
+    line-height: 1.7;
+}
 .letter {padding:20px; background:#f0e6f5; border-radius:15px; border:2px dashed #b19cd9; margin-bottom:20px; cursor:pointer; transition:all 0.3s ease;}
 .letter:hover {transform:translateY(-3px); box-shadow:0 6px 15px rgba(0,0,0,0.1);}
 .letter-header {display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;}
 .letter h3 {font-family:'Dancing Script',cursive; font-size:28px; color:#7d3c98;}
 .letter-content {max-height:0; overflow:hidden; transition:max-height 0.6s ease;}
 .letter.expanded .letter-content {max-height:1000px;}
-
+.signature{
+    margin-top: 35px;
+    font-family: 'Dancing Script', cursive;
+    font-size: 24px;
+}
 /* Music */
 .song {background:#e6d4f0; padding:15px; border-radius:10px; margin-bottom:15px; display:flex; align-items:center; gap:15px; cursor:pointer;}
 .song-icon {font-size:24px; color:#7d3c98;}
@@ -102,13 +110,21 @@ body {font-family:'Montserrat', sans-serif; background: linear-gradient(135deg,#
                     <h3>A Letter For You</h3>
                     <span>👇 Click to open</span>
                 </div>
-                <div class="letter-content">
-                    <p>My favorite stranger,</p>
-                    <p>It’s funny how someone I barely know can feel so familiar. You came into my life quietly, yet you’ve stayed on my mind in the loudest way. There’s just something about you that makes ordinary moments feel a little more meaningful.</p>
-                    <p>I don’t know your whole story yet, but maybe that’s what makes it special. Just know that somewhere out there, someone smiles at the thought of you.</p>
-                    <p>Yours quietly,</p>
-                    <p>draiyned</p>
-                </div>
+<div class="letter-content">
+
+<p>My favorite stranger,</p>
+
+<p>It’s funny how someone I barely know can feel so familiar.</p>
+
+<p>You came into my life quietly, without warning, and somehow you stayed in my thoughts longer than I expected.</p>
+
+<p>There’s something about you I can’t quite explain.</p>
+
+<p>And maybe that’s enough for now.</p>
+
+<p class="signature">— draiyned</p>
+
+</div>
             </div>
         </div>
 
