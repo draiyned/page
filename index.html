@@ -7,9 +7,26 @@
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 * {margin:0; padding:0; box-sizing:border-box;}
-body {font-family:'Montserrat', sans-serif; background: linear-gradient(135deg,#c8a2c8,#b19cd9); min-height:100vh; display:flex; flex-direction:column; align-items:center; overflow-x:hidden; color:#5b2c6f;}
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: linear-gradient(135deg,#c8a2c8,#b19cd9);
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;   /* center horizontally */
+  overflow-x: hidden;
+  color: #5b2c6f;
+}
 /* Password Modal */
-.password-modal {position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(177,156,217,0.95); display:flex; flex-direction:column; justify-content:center; align-items:center; z-index:100; transition:opacity 0.5s ease;}
+.password-modal {
+  position: fixed;
+  inset: 0; /* cleaner than top/left/width/height */
+  background: rgba(177,156,217,0.95);
+  display: grid;
+  place-items: center; /* perfectly centers horizontally + vertically */
+  z-index: 100;
+  transition: opacity 0.5s ease;
+}
 .password-content {background:white; padding:30px; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.1); text-align:center; max-width:400px; width:90%; animation:bounceIn 1s forwards;}
 .password-content h2 {font-family:'Dancing Script',cursive; font-size:32px; margin-bottom:20px; color:#7d3c98;}
 .password-input {width:100%; padding:12px; border:2px solid #b19cd9; border-radius:10px; margin-bottom:15px; font-size:16px; text-align:center; outline:none; transition:border-color 0.3s;}
@@ -205,6 +222,75 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(()=>{
                 passwordModal.style.display='none';
                 welcomeScreen.style.display='flex';
+                setTimeout(()=>{
+                    welcomeScreen.style.opacity='0';
+                    setTimeout(()=>{welcomeScreen.style.display='none'; mainContent.style.display='block';},800);
+                },2500);
+            },500);
+        } else {
+            passwordInput.value='';
+            passwordInput.placeholder='Try again, stranger...';
+            passwordInput.style.borderColor='#ff4d4d';
+            setTimeout(()=>{passwordInput.style.borderColor='#b19cd9'; passwordInput.placeholder="My Cat's name...";},1500);
+        }
+    });
+    passwordInput.addEventListener('keypress',function(e){if(e.key==='Enter') submitPassword.click();});
+
+    // Tabs
+    const tabs=document.querySelectorAll('.tab');
+    const tabContents=document.querySelectorAll('.tab-content');
+    tabs.forEach(tab=>{tab.addEventListener('click',function(){
+        const target=this.getAttribute('data-tab');
+        tabs.forEach(t=>t.classList.remove('active'));
+        this.classList.add('active');
+        tabContents.forEach(c=>{c.classList.remove('active'); if(c.id===target)c.classList.add('active');});
+    });});
+
+    // Love Letter
+    const loveLetter=document.getElementById('loveLetter');
+    loveLetter.addEventListener('click',function(){
+        const content=this.querySelector('.letter-content');
+        if(this.classList.contains('expanded')){content.style.maxHeight=null; this.classList.remove('expanded');}
+        else{content.style.maxHeight=content.scrollHeight+"px"; this.classList.add('expanded');}
+    });
+
+    // Floating hearts
+    function addFloatingElements(){
+        for(let i=0;i<15;i++){const h=document.createElement('div');h.classList.add('heart');h.innerHTML='💜';h.style.left=Math.random()*100+'%';h.style.top=Math.random()*100+'%';h.style.animationDelay=Math.random()*5+'s';document.body.appendChild(h);}
+        for(let i=0;i<5;i++){const t=document.createElement('div');t.classList.add('teddy-bear');t.innerHTML='🧸';t.style.left=Math.random()*100+'%';t.style.top=Math.random()*100+'%';t.style.animationDelay=Math.random()*5+'s';document.body.appendChild(t);}
+    }
+    addFloatingElements();
+
+    // Music with playing indicator
+    let currentAudio=null;
+    let currentSong=null;
+    const songs=document.querySelectorAll('.song');
+    songs.forEach(song=>{
+        const indicator=document.createElement('span');
+        indicator.classList.add('playing-indicator');
+        indicator.textContent='';
+        song.appendChild(indicator);
+
+        song.addEventListener('click',function(){
+            const src=this.getAttribute('data-src');
+            if(currentSong===this && currentAudio && !currentAudio.paused){
+                currentAudio.pause();
+                indicator.textContent='';
+            } else {
+                if(currentAudio){currentAudio.pause(); const prevInd=currentSong.querySelector('.playing-indicator'); if(prevInd) prevInd.textContent=''; currentAudio.currentTime=0;}
+                currentAudio=new Audio(src);
+                currentAudio.volume=0.5;
+                currentAudio.play();
+                currentSong=this;
+                indicator.textContent='🎵 Playing';
+                currentAudio.addEventListener('ended',()=>{indicator.textContent='';});
+            }
+        });
+    });
+});
+</script>
+</body>
+</html>           welcomeScreen.style.display='flex';
                 setTimeout(()=>{
                     welcomeScreen.style.opacity='0';
                     setTimeout(()=>{welcomeScreen.style.display='none'; mainContent.style.display='block';},800);
